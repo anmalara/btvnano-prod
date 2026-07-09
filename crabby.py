@@ -91,7 +91,6 @@ if args.make:
         else:
             request_name = dataset_name[:90] + rnd_str(8, dataset_name)
 
-        out_xcone_file_name = card['campaign']['config'].replace('NANO', 'XCone').replace('.py', '.root')
         verbatim_lines = []
         card_info = {
             '_requestName_': request_name,
@@ -105,7 +104,6 @@ if args.make:
             '_postprocess_': 'postprocess_data.sh' if card['campaign']['data'] else "postprocess_mc.sh",
 
             '_outputDatasetTag_': tag, 
-            '_outXConeFileName_': out_xcone_file_name,
         }
         
         if args.test:
