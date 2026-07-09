@@ -21,7 +21,6 @@ source /cvmfs/cms.cern.ch/cmsset_default.sh
 crabsetup
 ### 
 cmsenv
-git cms-merge-topic Ming-Yan:130X-fixPuppi_NanoV12
 scram b -j 10
 ```
 
@@ -37,9 +36,9 @@ Step 2.1 modify the configuration in `crab_ymls`
 
 ```yaml
 
-  workArea: data_2022_MINIAODv4_BTagMu
+  workArea: mc_summer24_zto2nu
   storageSite: T2_XXX # ===>  change to your storage site
-  outLFNDirBase: /store/user/XXX/PFNano_Run3/data_2022_MINIAODv4 # XXX to be user name
+  outLFNDirBase: /store/user/XXX/PFNano_Run3/mc_summer24_zto2nu # XXX to be user name
   voGroup:  # or if you are dcms
 ```
 
