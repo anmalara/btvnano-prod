@@ -5,14 +5,14 @@ Based from pfnano-prod from [Congqiao](colizz/pfnano-prod)
 Submit crab jobs for btvNano production using crabb.py. 
 
 
-**This branch is set for CMSSW_13_0_13 for NanoV12 production**
+**This branch is set for CMSSW_15_0_X_2026-01-19-2300 for NanoV15 production (N.B.: experimental, upgrading to the latest CMSSW version is recommended).**
 
 ## Instruction for user 
 Step 1: setup up cmssw & setup crab
 
 ```bash
-cmsrel CMSSW_13_0_13
-cd CMSSW_13_0_13/src
+cmsrel CMSSW_15_0_X_2026-01-19-2300
+cd CMSSW_15_0_X_2026-01-19-2300/src
 ## if not on lxplus with cc7
 source /cvmfs/grid.cern.ch/centos7-umd4-ui-4_200423/etc/profile.d/setup-c7-ui-example.sh
 source /cvmfs/cms.cern.ch/common/crab-setup.sh prod # note: this is new w.r.t. 106X instructions
@@ -28,7 +28,7 @@ scram b -j 10
 Step 2: setup `btvnano-prod` 
 
 ```bash
-git clone https://github.com/cms-btv-pog/btvnano-prod.git -b NanoAODv12_22Sep2023.
+git clone https://github.com/cms-btv-pog/btvnano-prod.git -b NanoAODv15_Summer2024
 ```
 
 Step 2.1 modify the configuration in `crab_ymls`
