@@ -1,0 +1,7 @@
+campaign:
+  config: utils/data_2024_NANO.py
+  data: true
+  datasets: datasets/data_2024.txt
+  outLFNDirBase: /store/group/phys_higgs/hinv
+  storageSite: T2_BE_IIHE
+  tag_extension: PFNano

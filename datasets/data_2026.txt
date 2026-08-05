@@ -1,0 +1,16 @@
+/JetMET0/Run2026B-PromptReco-v1/MINIAOD
+/JetMET0/Run2026D-PromptReco-v1/MINIAOD
+/JetMET1/Run2026B-PromptReco-v1/MINIAOD
+/JetMET1/Run2026D-PromptReco-v1/MINIAOD
+/EGamma0/Run2026B-PromptReco-v1/MINIAOD
+/EGamma0/Run2026D-PromptReco-v1/MINIAOD
+/EGamma1/Run2026B-PromptReco-v1/MINIAOD
+/EGamma1/Run2026D-PromptReco-v1/MINIAOD
+/EGamma2/Run2026B-PromptReco-v1/MINIAOD
+/EGamma2/Run2026D-PromptReco-v1/MINIAOD
+/EGamma3/Run2026B-PromptReco-v1/MINIAOD
+/EGamma3/Run2026D-PromptReco-v1/MINIAOD
+/EGamma4/Run2026B-PromptReco-v1/MINIAOD
+/EGamma4/Run2026D-PromptReco-v1/MINIAOD
+/EGamma5/Run2026B-PromptReco-v1/MINIAOD
+/EGamma5/Run2026D-PromptReco-v1/MINIAOD

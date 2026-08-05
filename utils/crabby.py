@@ -1,10 +1,10 @@
 #! /usr/bin/env python3
-import os, yaml, argparse, copy, importlib #type: ignore
+import os, yaml, argparse, copy, importlib  # type: ignore
 import string, random, hashlib
 from multiprocessing import Process
 
 # use python3 because crab client needs to call LumiList with python3 script
-from CRABAPI.RawCommand import crabCommand #type: ignore
+from CRABAPI.RawCommand import crabCommand  # type: ignore
 from http.client import HTTPException  # in python3, http.client replaces httplib
 
 from utils.colors import cyan, green, blue, red, orange, yellow
@@ -163,9 +163,9 @@ def main():
                 if line.startswith("Jobs status"):
                     for j in range(10):
                         try:
-                         text = o[i + j]
+                            text = o[i + j]
                         except:
-                         continue
+                            continue
                         if len(text) < 2:
                             continue
                         if any(s in text for s in status_cases) and "%" in text and "/" in text:

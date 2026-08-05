@@ -1,0 +1,7 @@
+campaign:
+  config: utils/mc_2022_EE_NANO.py
+  data: false
+  datasets: datasets/mc_2022EE_ZGamma.txt
+  outLFNDirBase: /store/group/phys_higgs/hinv
+  storageSite: T2_BE_IIHE
+  tag_extension: PFNano
