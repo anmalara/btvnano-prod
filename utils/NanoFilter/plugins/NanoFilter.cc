@@ -136,13 +136,13 @@ bool NanoFilter::hasElectrons(edm::Event& iEvent) {
   iEvent.getByToken(electronToken_, electrons);
   for (const auto &e : *electrons) {
     // Compute cut based ID
-    int32_t cutBasedIDVeto = e.userInt("cutBasedID_Fall17V2_veto");
-    int32_t cutBasedIDLoose = e.userInt("cutBasedID_Fall17V2_loose");
-    int32_t cutBasedIDMedium = e.userInt("cutBasedID_Fall17V2_medium");
-    int32_t cutBasedIDTight = e.userInt("cutBasedID_Fall17V2_tight");
+    int32_t cutBasedIDVeto = e.userInt("cutBasedID_veto");
+    int32_t cutBasedIDLoose = e.userInt("cutBasedID_loose");
+    int32_t cutBasedIDMedium = e.userInt("cutBasedID_medium");
+    int32_t cutBasedIDTight = e.userInt("cutBasedID_tight");
 
     int32_t cutBasedId = cutBasedIDVeto + cutBasedIDLoose + cutBasedIDMedium + cutBasedIDTight;
-    if ((e.pt() > electronPtThresh_) && (cutBasedId > 0)) { 
+    if ((e.pt() > electronPtThresh_) && (cutBasedId > 0)) {
       return true; 
     }
   }
