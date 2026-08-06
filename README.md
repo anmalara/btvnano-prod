@@ -1,8 +1,5 @@
 # Instructions for btvnano-prod samples
 
-More general info can be found in the ReadME file.
-This information overrules the instuctions in the ReadME file.
-
 ## Environment
 
 At the moment, job submission to CRAB is possible only from `lxplus8`. Make sure you compile from the correct environment. Ask if you need help!!!
