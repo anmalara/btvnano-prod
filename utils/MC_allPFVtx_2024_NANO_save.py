@@ -2,7 +2,7 @@
 # using:
 # Revision: 1.19
 # Source: /local/reps/CMSSW/CMSSW/Configuration/Applications/python/ConfigBuilder.py,v
-# with command line options: MC_allPFVtx_2024 --mc --eventcontent NANOAODSIM --datatier NANOAODSIM --conditions auto:phase1_2024_realistic --step NANO --nThreads 4 --era Run3 --filein /store/mc/RunIII2024Summer24MiniAODv6/TTtoLNu2Q_TuneCP5_13p6TeV_powheg-pythia8/MINIAODSIM/150X_mcRun3_2024_realistic_v2-v2/2520000/00045344-a602-4022-ac1e-81161a31a314.root -n 100 --customise pfnano_cff.PFVtxnano_customize --no_exec --customise_commands process.genWeightsTable.keepAllPSWeights=True
+# with command line options: mc_2024Vtx --mc --eventcontent NANOAODSIM --datatier NANOAODSIM --step NANO --conditions 150X_mcRun3_2024_realistic_v4 --era Run3 --nThreads 4 -n -1 --no_exec --customise=pfnano_cff.PFVtxnano_customize --customise=addPFCands_cff.addGenStable --customise_commands=process.add_(cms.Service('InitRootHandlers', EnableIMT = cms.untracked.bool(False)));process.MessageLogger.cerr.FwkReport.reportEvery=1000;process.NANOAODSIMoutput.fakeNameForCrab = cms.untracked.bool(True)
 import FWCore.ParameterSet.Config as cms
 
 from Configuration.Eras.Era_Run3_cff import Run3
@@ -22,43 +22,13 @@ process.load("Configuration.StandardSequences.EndOfProcess_cff")
 process.load("Configuration.StandardSequences.FrontierConditions_GlobalTag_cff")
 
 process.maxEvents = cms.untracked.PSet(
-    input=cms.untracked.int32(10000), output=cms.optional.untracked.allowed(cms.int32, cms.PSet)
+    input=cms.untracked.int32(-1), output=cms.optional.untracked.allowed(cms.int32, cms.PSet)
 )
 
 # Input source
 process.source = cms.Source(
     "PoolSource",
-    fileNames=cms.untracked.vstring(
-        # "/store/mc/RunIII2024Summer24MiniAODv6/GJ-4Jets-2NLO2LO_Bin-PTG-25_Par-BiasedPTG_TuneSherpaDef_13p6TeV_sherpaMEPS/MINIAODSIM/150X_mcRun3_2024_realistic_v2-v2/110000/395bf78b-1661-430c-89f0-6ca7555e4d63.root",
-        # "/store/mc/RunIII2024Summer24MiniAODv6/GJ-4Jets-2NLO2LO_Bin-PTG-25_Par-BiasedPTG_TuneSherpaDef_13p6TeV_sherpaMEPS/MINIAODSIM/150X_mcRun3_2024_realistic_v2-v2/110000/00627772-8db6-4d13-88c9-8ae54ccdf848.root",
-        # "/store/mc/RunIII2024Summer24MiniAODv6/GJ-4Jets-2NLO2LO_Bin-PTG-25_Par-BiasedPTG_TuneSherpaDef_13p6TeV_sherpaMEPS/MINIAODSIM/150X_mcRun3_2024_realistic_v2-v2/110000/009b4e2c-54d7-47f1-8e14-dde5f5301917.root",
-        # "/store/mc/RunIII2024Summer24MiniAODv6/GJ-4Jets-2NLO2LO_Bin-PTG-25_Par-BiasedPTG_TuneSherpaDef_13p6TeV_sherpaMEPS/MINIAODSIM/150X_mcRun3_2024_realistic_v2-v2/110000/009fcceb-77da-472e-b1c1-7693bfad9eba.root",
-        # "/store/mc/RunIII2024Summer24MiniAODv6/GJ-4Jets-2NLO2LO_Bin-PTG-25_Par-BiasedPTG_TuneSherpaDef_13p6TeV_sherpaMEPS/MINIAODSIM/150X_mcRun3_2024_realistic_v2-v2/110000/00daa524-20f7-45d8-9af1-68f4b48f9e68.root",
-        # "/store/mc/RunIII2024Summer24MiniAODv6/GJ-4Jets-2NLO2LO_Bin-PTG-25_Par-BiasedPTG_TuneSherpaDef_13p6TeV_sherpaMEPS/MINIAODSIM/150X_mcRun3_2024_realistic_v2-v2/110000/00ee9883-c5a8-44a2-a8ce-d77a3a8bec20.root",
-        # "/store/mc/RunIII2024Summer24MiniAODv6/GJ-4Jets-2NLO2LO_Bin-PTG-25_Par-BiasedPTG_TuneSherpaDef_13p6TeV_sherpaMEPS/MINIAODSIM/150X_mcRun3_2024_realistic_v2-v2/110000/00fec023-00b9-43f9-ba72-d26dbbe3a0f2.root",
-        # "/store/mc/RunIII2024Summer24MiniAODv6/GJ-4Jets-2NLO2LO_Bin-PTG-25_Par-BiasedPTG_TuneSherpaDef_13p6TeV_sherpaMEPS/MINIAODSIM/150X_mcRun3_2024_realistic_v2-v2/110000/01358600-cfed-4213-9d0e-2c0d4d597d35.root",
-        # "/store/mc/RunIII2024Summer24MiniAODv6/GJ-4Jets-2NLO2LO_Bin-PTG-25_Par-BiasedPTG_TuneSherpaDef_13p6TeV_sherpaMEPS/MINIAODSIM/150X_mcRun3_2024_realistic_v2-v2/110000/01a5cd56-eb16-4f6c-91d9-26bedfeb195a.root",
-        # "/store/mc/RunIII2024Summer24MiniAODv6/GJ-4Jets-2NLO2LO_Bin-PTG-25_Par-BiasedPTG_TuneSherpaDef_13p6TeV_sherpaMEPS/MINIAODSIM/150X_mcRun3_2024_realistic_v2-v2/110000/01a74a45-aa9e-4144-a718-741b55d7da76.root",
-        # "file:/eos/cms/store/group/phys_higgs/vbfhiggs/DarkPhoton/darkphoton-ggF/RunIII2024Summer24MiniAODv6/20260715_093320_RunIII2024Summer24MiniAODv6_10.root",
-        # "file:/eos/cms/store/group/phys_higgs/vbfhiggs/DarkPhoton/darkphoton-ggF/RunIII2024Summer24MiniAODv6/20260715_093320_RunIII2024Summer24MiniAODv6_20.root",
-        # "file:/eos/cms/store/group/phys_higgs/vbfhiggs/DarkPhoton/darkphoton-ggF/RunIII2024Summer24MiniAODv6/20260715_093320_RunIII2024Summer24MiniAODv6_30.root",
-        # "file:/eos/cms/store/group/phys_higgs/vbfhiggs/DarkPhoton/darkphoton-ggF/RunIII2024Summer24MiniAODv6/20260715_093320_RunIII2024Summer24MiniAODv6_40.root",
-        # "file:/eos/cms/store/group/phys_higgs/vbfhiggs/DarkPhoton/darkphoton-ggF/RunIII2024Summer24MiniAODv6/20260715_093320_RunIII2024Summer24MiniAODv6_50.root",
-        # "file:/eos/cms/store/group/phys_higgs/vbfhiggs/DarkPhoton/darkphoton-ggF/RunIII2024Summer24MiniAODv6/20260715_093320_RunIII2024Summer24MiniAODv6_60.root",
-        # "file:/eos/cms/store/group/phys_higgs/vbfhiggs/DarkPhoton/darkphoton-ggF/RunIII2024Summer24MiniAODv6/20260715_093320_RunIII2024Summer24MiniAODv6_70.root",
-        # "file:/eos/cms/store/group/phys_higgs/vbfhiggs/DarkPhoton/darkphoton-ggF/RunIII2024Summer24MiniAODv6/20260715_093320_RunIII2024Summer24MiniAODv6_80.root",
-        "file:/eos/cms/store/group/phys_higgs/vbfhiggs/DarkPhoton/darkphoton-ggF/RunIII2024Summer24MiniAODv6/20260715_093320_RunIII2024Summer24MiniAODv6_90.root",
-        # "file:/eos/cms/store/group/phys_higgs/vbfhiggs/DarkPhoton/darkphoton-ggF/RunIII2024Summer24MiniAODv6/20260715_093320_RunIII2024Summer24MiniAODv6_11.root",
-        # "file:/eos/cms/store/group/phys_higgs/vbfhiggs/DarkPhoton/darkphoton-ggF/RunIII2024Summer24MiniAODv6/20260715_093320_RunIII2024Summer24MiniAODv6_21.root",
-        # "file:/eos/cms/store/group/phys_higgs/vbfhiggs/DarkPhoton/darkphoton-ggF/RunIII2024Summer24MiniAODv6/20260715_093320_RunIII2024Summer24MiniAODv6_31.root",
-        # "file:/eos/cms/store/group/phys_higgs/vbfhiggs/DarkPhoton/darkphoton-ggF/RunIII2024Summer24MiniAODv6/20260715_093320_RunIII2024Summer24MiniAODv6_41.root",
-        # "file:/eos/cms/store/group/phys_higgs/vbfhiggs/DarkPhoton/darkphoton-ggF/RunIII2024Summer24MiniAODv6/20260715_093320_RunIII2024Summer24MiniAODv6_51.root",
-        # "file:/eos/cms/store/group/phys_higgs/vbfhiggs/DarkPhoton/darkphoton-ggF/RunIII2024Summer24MiniAODv6/20260715_093320_RunIII2024Summer24MiniAODv6_61.root",
-        # "file:/eos/cms/store/group/phys_higgs/vbfhiggs/DarkPhoton/darkphoton-ggF/RunIII2024Summer24MiniAODv6/20260715_093320_RunIII2024Summer24MiniAODv6_71.root",
-        # "file:/eos/cms/store/group/phys_higgs/vbfhiggs/DarkPhoton/darkphoton-ggF/RunIII2024Summer24MiniAODv6/20260715_093320_RunIII2024Summer24MiniAODv6_81.root",
-        # "file:/eos/cms/store/group/phys_higgs/vbfhiggs/DarkPhoton/darkphoton-ggF/RunIII2024Summer24MiniAODv6/20260715_093320_RunIII2024Summer24MiniAODv6_91.root",
-        # "file:rootfiles/darkphoton_mini.root",
-    ),
+    fileNames=cms.untracked.vstring("file:mc_2024Vtx_PAT.root"),
     secondaryFileNames=cms.untracked.vstring(),
 )
 
@@ -94,7 +64,7 @@ process.options = cms.untracked.PSet(
 
 # Production Info
 process.configurationMetadata = cms.untracked.PSet(
-    annotation=cms.untracked.string("MC_allPFVtx_2024 nevts:100"),
+    annotation=cms.untracked.string("mc_2024Vtx nevts:-1"),
     name=cms.untracked.string("Applications"),
     version=cms.untracked.string("$Revision: 1.19 $"),
 )
@@ -108,45 +78,18 @@ process.NANOAODSIMoutput = cms.OutputModule(
     dataset=cms.untracked.PSet(
         dataTier=cms.untracked.string("NANOAODSIM"), filterName=cms.untracked.string("")
     ),
-    # fileName=cms.untracked.string("MC_allPFVtx_2024_NANO.root"),
-    # fileName=cms.untracked.string("rootfiles/gjet/MC_allPFVtx_2024_NANO_gjet_395bf78b-1661-430c-89f0-6ca7555e4d63.root"),
-    # fileName=cms.untracked.string("rootfiles/gjet/MC_allPFVtx_2024_NANO_gjet_00627772-8db6-4d13-88c9-8ae54ccdf848.root"),
-    # fileName=cms.untracked.string("rootfiles/gjet/MC_allPFVtx_2024_NANO_gjet_009b4e2c-54d7-47f1-8e14-dde5f5301917.root"),
-    # fileName=cms.untracked.string("rootfiles/gjet/MC_allPFVtx_2024_NANO_gjet_009fcceb-77da-472e-b1c1-7693bfad9eba.root"),
-    # fileName=cms.untracked.string("rootfiles/gjet/MC_allPFVtx_2024_NANO_gjet_00daa524-20f7-45d8-9af1-68f4b48f9e68.root"),
-    # fileName=cms.untracked.string("rootfiles/gjet/MC_allPFVtx_2024_NANO_gjet_00ee9883-c5a8-44a2-a8ce-d77a3a8bec20.root"),
-    # fileName=cms.untracked.string("rootfiles/gjet/MC_allPFVtx_2024_NANO_gjet_00fec023-00b9-43f9-ba72-d26dbbe3a0f2.root"),
-    # fileName=cms.untracked.string("rootfiles/gjet/MC_allPFVtx_2024_NANO_gjet_01358600-cfed-4213-9d0e-2c0d4d597d35.root"),
-    # fileName=cms.untracked.string("rootfiles/gjet/MC_allPFVtx_2024_NANO_gjet_01a5cd56-eb16-4f6c-91d9-26bedfeb195a.root"),
-    # fileName=cms.untracked.string("rootfiles/gjet/MC_allPFVtx_2024_NANO_gjet_01a74a45-aa9e-4144-a718-741b55d7da76.root"),
-    # fileName=cms.untracked.string("rootfiles/darkphoton/MC_allPFVtx_2024_NANO_dark_10.root"),
-    # fileName=cms.untracked.string("rootfiles/darkphoton/MC_allPFVtx_2024_NANO_dark_20.root"),
-    # fileName=cms.untracked.string("rootfiles/darkphoton/MC_allPFVtx_2024_NANO_dark_30.root"),
-    # fileName=cms.untracked.string("rootfiles/darkphoton/MC_allPFVtx_2024_NANO_dark_40.root"),
-    # fileName=cms.untracked.string("rootfiles/darkphoton/MC_allPFVtx_2024_NANO_dark_50.root"),
-    # fileName=cms.untracked.string("rootfiles/darkphoton/MC_allPFVtx_2024_NANO_dark_60.root"),
-    # fileName=cms.untracked.string("rootfiles/darkphoton/MC_allPFVtx_2024_NANO_dark_70.root"),
-    # fileName=cms.untracked.string("rootfiles/darkphoton/MC_allPFVtx_2024_NANO_dark_80.root"),
-    fileName=cms.untracked.string("rootfiles/darkphoton/MC_allPFVtx_2024_NANO_dark_90.root"),
-    # fileName=cms.untracked.string("rootfiles/darkphoton/MC_allPFVtx_2024_NANO_dark_11.root"),
-    # fileName=cms.untracked.string("rootfiles/darkphoton/MC_allPFVtx_2024_NANO_dark_21.root"),
-    # fileName=cms.untracked.string("rootfiles/darkphoton/MC_allPFVtx_2024_NANO_dark_31.root"),
-    # fileName=cms.untracked.string("rootfiles/darkphoton/MC_allPFVtx_2024_NANO_dark_41.root"),
-    # fileName=cms.untracked.string("rootfiles/darkphoton/MC_allPFVtx_2024_NANO_dark_51.root"),
-    # fileName=cms.untracked.string("rootfiles/darkphoton/MC_allPFVtx_2024_NANO_dark_61.root"),
-    # fileName=cms.untracked.string("rootfiles/darkphoton/MC_allPFVtx_2024_NANO_dark_71.root"),
-    # fileName=cms.untracked.string("rootfiles/darkphoton/MC_allPFVtx_2024_NANO_dark_81.root"),
-    # fileName=cms.untracked.string("rootfiles/darkphoton/MC_allPFVtx_2024_NANO_dark_91.root"),
-    # fileName=cms.untracked.string("MC_allPFVtx_2024_NANO_darkphoton.root"),
+    fileName=cms.untracked.string("mc_2024Vtx_NANO.root"),
     outputCommands=process.NANOAODSIMEventContent.outputCommands,
+    SelectEvents=cms.untracked.PSet(SelectEvents=cms.vstring("nanoAOD_step")),
 )
 
 # Additional output definition
+process.TFileService = cms.Service("TFileService", fileName=cms.string("histograms.root"))
 
 # Other statements
 from Configuration.AlCa.GlobalTag import GlobalTag
 
-process.GlobalTag = GlobalTag(process.GlobalTag, "auto:phase1_2024_realistic", "")
+process.GlobalTag = GlobalTag(process.GlobalTag, "150X_mcRun3_2024_realistic_v4", "")
 
 # Path and EndPath definitions
 process.nanoAOD_step = cms.Path(process.nanoSequenceMC)
@@ -187,7 +130,9 @@ process = addGenStable(process)
 
 # Customisation from command line
 
-process.genWeightsTable.keepAllPSWeights = True
+process.add_(cms.Service("InitRootHandlers", EnableIMT=cms.untracked.bool(False)))
+process.MessageLogger.cerr.FwkReport.reportEvery = 1000
+process.NANOAODSIMoutput.fakeNameForCrab = cms.untracked.bool(True)
 # Add early deletion of temporary data products to reduce peak memory need
 from Configuration.StandardSequences.earlyDeleteSettings_cff import customiseEarlyDelete
 

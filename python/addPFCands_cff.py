@@ -1,5 +1,5 @@
-import FWCore.ParameterSet.Config as cms #type: ignore
-from PhysicsTools.NanoAOD.common_cff import CandVars, Var #type: ignore
+import FWCore.ParameterSet.Config as cms  # type: ignore
+from PhysicsTools.NanoAOD.common_cff import CandVars, Var  # type: ignore
 
 
 def defaultPFCandidateCut():
@@ -25,9 +25,6 @@ def addPFCands(process, cut=None, maxLen=None, storeVertexInfo=False):
 
     candidateVariables = cms.PSet(
         CandVars,
-        # px=Var("px", float, doc="PF candidate x momentum", precision=10),
-        # py=Var("py", float, doc="PF candidate y momentum", precision=10),
-        # et=Var("et", float, doc="PF candidate transverse energy", precision=10),
         puppiWeight=Var("puppiWeight()", float, doc="Puppi weight", precision=10),
         puppiWeightNoLep=Var("puppiWeightNoLep()", float, doc="puppiWeightNoLep", precision=10),
         vtxChi2=Var("?hasTrackDetails()?vertexChi2():-1", float, doc="vertex chi2", precision=10),
@@ -174,4 +171,27 @@ def addGenStable(process):
 
     process.genStableTask = cms.Task(process.genStableTable)
     process.schedule.associate(process.genStableTask)
+    return process
+
+
+def addEventFilter(process):
+    """Add the NanoFilter after the common NanoAOD tables."""
+    process.nanoFilter = cms.EDFilter(
+        "NanoFilter",
+        jets=cms.InputTag("linkedObjects", "jets"),
+        met=cms.InputTag("slimmedMETs"),
+        electrons=cms.InputTag("linkedObjects", "electrons"),
+        muons=cms.InputTag("linkedObjects", "muons"),
+        photons=cms.InputTag("linkedObjects", "photons"),
+        metPtMin=cms.double(100.0),
+        nJetMin=cms.uint32(2),
+        jetPtMin=cms.double(20.0),
+        electronPtMin=cms.double(20.0),
+        muonPtMin=cms.double(20.0),
+        photonPtMin=cms.double(150.0),
+    )
+
+    is_mc = hasattr(process, "NANOAODSIMoutput")
+    sequence = process.nanoSequenceMC if is_mc else process.nanoSequence
+    sequence.insert(sequence.index(process.nanoSequenceCommon) + 1, process.nanoFilter)
     return process

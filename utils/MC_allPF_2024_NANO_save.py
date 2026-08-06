@@ -2,7 +2,7 @@
 # using:
 # Revision: 1.19
 # Source: /local/reps/CMSSW/CMSSW/Configuration/Applications/python/ConfigBuilder.py,v
-# with command line options: MC_allPF_2024 --mc --eventcontent NANOAODSIM --datatier NANOAODSIM --conditions auto:phase1_2024_realistic --step NANO --nThreads 4 --era Run3 --filein /store/mc/RunIII2024Summer24MiniAODv6/TTtoLNu2Q_TuneCP5_13p6TeV_powheg-pythia8/MINIAODSIM/150X_mcRun3_2024_realistic_v2-v2/2520000/00045344-a602-4022-ac1e-81161a31a314.root -n 100 --customise pfnano_cff.PFnano_customize --no_exec --customise_commands process.genWeightsTable.keepAllPSWeights=True
+# with command line options: mc_2024 --mc --eventcontent NANOAODSIM --datatier NANOAODSIM --step NANO --conditions 150X_mcRun3_2024_realistic_v4 --era Run3 --nThreads 4 -n -1 --no_exec --customise=pfnano_cff.PFnano_customize --customise_commands=process.add_(cms.Service('InitRootHandlers', EnableIMT = cms.untracked.bool(False)));process.MessageLogger.cerr.FwkReport.reportEvery=1000;process.NANOAODSIMoutput.fakeNameForCrab = cms.untracked.bool(True)
 import FWCore.ParameterSet.Config as cms
 
 from Configuration.Eras.Era_Run3_cff import Run3
@@ -22,7 +22,7 @@ process.load("Configuration.StandardSequences.EndOfProcess_cff")
 process.load("Configuration.StandardSequences.FrontierConditions_GlobalTag_cff")
 
 process.maxEvents = cms.untracked.PSet(
-    input=cms.untracked.int32(10000), output=cms.optional.untracked.allowed(cms.int32, cms.PSet)
+    input=cms.untracked.int32(-1), output=cms.optional.untracked.allowed(cms.int32, cms.PSet)
 )
 
 # Input source
@@ -30,7 +30,6 @@ process.source = cms.Source(
     "PoolSource",
     fileNames=cms.untracked.vstring(
         "/store/mc/RunIII2024Summer24MiniAODv6/GJ-4Jets-2NLO2LO_Bin-PTG-25_Par-BiasedPTG_TuneSherpaDef_13p6TeV_sherpaMEPS/MINIAODSIM/150X_mcRun3_2024_realistic_v2-v2/110000/395bf78b-1661-430c-89f0-6ca7555e4d63.root"
-        # "file:root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/vbfhiggs/DarkPhoton/darkphoton-ggF/RunIII2024Summer24MiniAODv6/20260715_093320_RunIII2024Summer24MiniAODv6_81.root"
     ),
     secondaryFileNames=cms.untracked.vstring(),
 )
@@ -67,7 +66,7 @@ process.options = cms.untracked.PSet(
 
 # Production Info
 process.configurationMetadata = cms.untracked.PSet(
-    annotation=cms.untracked.string("MC_allPF_2024 nevts:100"),
+    annotation=cms.untracked.string("mc_2024 nevts:-1"),
     name=cms.untracked.string("Applications"),
     version=cms.untracked.string("$Revision: 1.19 $"),
 )
@@ -81,17 +80,18 @@ process.NANOAODSIMoutput = cms.OutputModule(
     dataset=cms.untracked.PSet(
         dataTier=cms.untracked.string("NANOAODSIM"), filterName=cms.untracked.string("")
     ),
-    fileName=cms.untracked.string("MC_allPF_2024_NANO.root"),
-    # fileName=cms.untracked.string("MC_allPF_2024_NANO_darkphoton.root"),
+    fileName=cms.untracked.string("mc_2024_NANO.root"),
     outputCommands=process.NANOAODSIMEventContent.outputCommands,
+    SelectEvents=cms.untracked.PSet(SelectEvents=cms.vstring("nanoAOD_step")),
 )
 
 # Additional output definition
+process.TFileService = cms.Service("TFileService", fileName=cms.string("histograms.root"))
 
 # Other statements
 from Configuration.AlCa.GlobalTag import GlobalTag
 
-process.GlobalTag = GlobalTag(process.GlobalTag, "auto:phase1_2024_realistic", "")
+process.GlobalTag = GlobalTag(process.GlobalTag, "150X_mcRun3_2024_realistic_v4", "")
 
 # Path and EndPath definitions
 process.nanoAOD_step = cms.Path(process.nanoSequenceMC)
@@ -127,7 +127,9 @@ process = nanoAOD_customizeCommon(process)
 
 # Customisation from command line
 
-process.genWeightsTable.keepAllPSWeights = True
+process.add_(cms.Service("InitRootHandlers", EnableIMT=cms.untracked.bool(False)))
+process.MessageLogger.cerr.FwkReport.reportEvery = 1000
+process.NANOAODSIMoutput.fakeNameForCrab = cms.untracked.bool(True)
 # Add early deletion of temporary data products to reduce peak memory need
 from Configuration.StandardSequences.earlyDeleteSettings_cff import customiseEarlyDelete
 
