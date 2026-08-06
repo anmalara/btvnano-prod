@@ -57,14 +57,17 @@ def main():
         "data_2022_CDE": {
             "GT": "150X_dataRun3_v5",
             "customs": ["pfnano_cff.PFnano_customize"],
+            "era": "Run3,run3_nanoAOD_pre142X",
         },
         "data_2022_FG": {
             "GT": "150X_dataRun3_v5",
             "customs": ["pfnano_cff.PFnano_customize"],
+            "era": "Run3,run3_nanoAOD_pre142X",
         },
         "data_2023_CD": {
             "GT": "150X_dataRun3_v5",
             "customs": ["pfnano_cff.PFnano_customize"],
+            "era": "Run3,run3_nanoAOD_pre142X",
         },
         "data_2024": {
             "GT": "150X_dataRun3_v2",
@@ -81,18 +84,22 @@ def main():
         "mc_2022": {
             "GT": "150X_mcRun3_2024_realistic_v2",
             "customs": ["pfnano_cff.PFnano_customize"],
+            "era": "Run3,run3_nanoAOD_pre142X",
         },
         "mc_2022_EE": {
             "GT": "150X_mcRun3_2024_realistic_v2",
             "customs": ["pfnano_cff.PFnano_customize"],
+            "era": "Run3,run3_nanoAOD_pre142X",
         },
         "mc_2023": {
             "GT": "150X_mcRun3_2024_realistic_v2",
             "customs": ["pfnano_cff.PFnano_customize"],
+            "era": "Run3,run3_nanoAOD_pre142X",
         },
         "mc_2023_BPix": {
             "GT": "150X_mcRun3_2024_realistic_v2",
             "customs": ["pfnano_cff.PFnano_customize"],
+            "era": "Run3,run3_nanoAOD_pre142X",
         },
         "mc_2024": {
             "GT": "150X_mcRun3_2024_realistic_v4",

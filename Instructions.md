@@ -1,4 +1,4 @@
-# Instructions for PFNano samples
+# Instructions for btvnano-prod samples
 
 More general info can be found in the ReadME file.
 This information overrules the instuctions in the ReadME file.
@@ -14,10 +14,16 @@ cmsenv
 git cms-init
 git cms-merge-topic mseidel42:btvNano_150X_backport
 git clone git@github.com:anmalara/btvnano-prod.git -b NanoAODv15_Summer2024
+cd $CMSSW_BASE/src/PhysicsTools
+mkedfltr NanoFilter
+cp $CMSSW_BASE/src/btvnano-prod/utils/NanoFilter/plugins/BuildFile.xml $CMSSW_BASE/src/PhysicsTools/NanoFilter/plugins/BuildFile.xml
+cp $CMSSW_BASE/src/btvnano-prod/utils/NanoFilter/plugins/NanoFilter.cc $CMSSW_BASE/src/PhysicsTools/NanoFilter/plugins/NanoFilter.cc
+
 cd $CMSSW_BASE/src
 scram b -j 10
 cd btvnano-prod
 
+source setup.sh
 ```
 
 Remeber to source the `setup.sh` file at each login.
@@ -69,23 +75,27 @@ Create DAS input lists and the corresponding cards:
 ```
 
 The input lists are written under `datasets/`; CRAB cards are written under
-`utils/cards/`. Cards follow the convention
+`utils/cards/` and follow the convention
 `card_{type}_{year}_{sample}.yml`.
 
 ## Submit with CRAB
 
-`utils/crabby.py` reads a generated card and creates one CRAB task per DAS
-dataset. It uses `utils/template_crab.py` as the CRAB baseline. The template
-transfers `utils/mergeHistogramInFile.py` to each worker; the CRAB executable
-script should run `cmsRun` and then use that helper to merge the histogram
-cycles written to `histograms.root`.
+For crab submission a handler script `utils/crabby.py` reads a generated YAML card from `utils/cards/` and creates
+one CRAB task per DAS dataset.
 
-Make sure the executable script referenced by `template_crab.py`
-(`utils/ScriptExe.sh`) is present before submitting.
-`mergeHistogramInFile.py` reads `histograms.root` and writes the merged event
-count histograms to `hists_nevents.root` by default.
+It uses `utils/template_crab.py` as the CRAB baseline. The template contains:
 
-Use the generated card directly with `utils/crabby.py`:
+```python
+config.JobType.scriptExe = "utils/ScriptExe.sh"
+config.JobType.inputFiles = ["utils/mergeHistogramInFile.py"]
+```
+
+Therefore `utils/ScriptExe.sh` runs `cmsRun` on the generated driver and then
+calls `utils/mergeHistogramInFile.py`. The helper reads the histogram cycles
+from `histograms.root` and writes `hists_nevents.root` by default. Make sure
+`utils/ScriptExe.sh` is executable before submitting.
+
+Use a generated card directly with `utils/crabby.py`:
 
 - create the CRAB configurations:
   ```bash
@@ -107,5 +117,4 @@ Use the generated card directly with `utils/crabby.py`:
 Replace `{type}`, `{year}`, and `{sample}` with the desired card components
 before running the command.
 
-Use `--test` together with `--make` to generate a one-unit configuration with
-publication disabled.
+Add `--test` together with `--make` to generate a one-unit configuration with publication disabled.

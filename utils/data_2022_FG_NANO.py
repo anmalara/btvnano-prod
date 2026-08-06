@@ -2,12 +2,13 @@
 # using:
 # Revision: 1.19
 # Source: /local/reps/CMSSW/CMSSW/Configuration/Applications/python/ConfigBuilder.py,v
-# with command line options: data_2022_FG --data --eventcontent NANOAOD --datatier NANOAOD --step NANO --conditions 150X_dataRun3_v5 --era Run3 --nThreads 4 -n -1 --no_exec --customise=pfnano_cff.PFnano_customize --customise_commands=process.add_(cms.Service('InitRootHandlers', EnableIMT = cms.untracked.bool(False)));process.MessageLogger.cerr.FwkReport.reportEvery=1000;process.NANOAODoutput.fakeNameForCrab = cms.untracked.bool(True)
+# with command line options: data_2022_FG --data --eventcontent NANOAOD --datatier NANOAOD --step NANO --conditions 150X_dataRun3_v5 --era Run3,run3_nanoAOD_pre142X --nThreads 4 -n -1 --no_exec --customise=pfnano_cff.PFnano_customize --customise_commands=process.add_(cms.Service('InitRootHandlers', EnableIMT = cms.untracked.bool(False)));process.MessageLogger.cerr.FwkReport.reportEvery=1000;process.NANOAODoutput.fakeNameForCrab = cms.untracked.bool(True)
 import FWCore.ParameterSet.Config as cms
 
 from Configuration.Eras.Era_Run3_cff import Run3
+from Configuration.Eras.Modifier_run3_nanoAOD_pre142X_cff import run3_nanoAOD_pre142X
 
-process = cms.Process("NANO", Run3)
+process = cms.Process("NANO", Run3, run3_nanoAOD_pre142X)
 
 # import of standard configurations
 process.load("Configuration.StandardSequences.Services_cff")

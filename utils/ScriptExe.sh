@@ -16,7 +16,7 @@ echo "==========================================================================
 echo "ScriptExe.sh: Step 1: Make Skim NanoAOD"
 echo "===================================================================================================="
 echo "Executing: cmsRun PSet.py"
-cmsRun -j FrameworkJobReport.xml -p PSet.py
+cmsRun -j FrameworkJobReport.xml PSet.py
 if [ $? -ne 0 ]; then
   echo "Error: cmsRun failed. Exiting."
   exit 1
