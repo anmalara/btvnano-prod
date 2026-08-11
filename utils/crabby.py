@@ -80,6 +80,9 @@ def main():
             infos += ver[1].split("_")[1:]
         if "_ext" in dataset:
             infos += ver[1].split("_")[-1:]
+        # Keep separate request names for different DAS processing versions.
+        if ver[-1].startswith("v") and ver[-1] not in infos:
+            infos += ver[-1:]
         dataset_name = "_".join(infos)
 
         tag = f"{dataset.split('/')[2]}_{tag_extension}"

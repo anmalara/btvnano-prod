@@ -10,7 +10,7 @@ cd CMSSW_15_0_2/src
 cmsenv
 git cms-init
 git cms-merge-topic mseidel42:btvNano_150X_backport
-git clone git@github.com:anmalara/btvnano-prod.git -b NanoAODv15_Summer2024
+git clone --depth 1 --single-branch --no-tags --branch NanoAODv15_Summer2024 git@github.com:anmalara/btvnano-prod.git
 cd $CMSSW_BASE/src/PhysicsTools
 mkedfltr NanoFilter
 cp $CMSSW_BASE/src/btvnano-prod/utils/NanoFilter/plugins/BuildFile.xml $CMSSW_BASE/src/PhysicsTools/NanoFilter/plugins/BuildFile.xml
