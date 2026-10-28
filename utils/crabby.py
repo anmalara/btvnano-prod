@@ -37,6 +37,7 @@ def parse_args():
     parser.add_argument("--resubmit", action="store_true", help="Submit configs created by ``--make``.")
     parser.add_argument("--status", action="store_true", help="Run `crab submit` and print nicely.")
     parser.add_argument("--test", action="store_true", help="Test submit - only 1 file, don't publish.")
+    parser.add_argument("--yes", action="store_true", default=False, help="Answer yes to all prompted questions.")
     args = parser.parse_args()
     return args
 
@@ -57,8 +58,9 @@ def main():
     print(cyan(f"Working area: {work_area}"))
     if os.path.isdir(work_area):
         if args.submit or args.make:
-            if input(yellow(f"``workArea: {work_area}`` already exists. Continue? (y/n)")) != "y":
-                exit()
+            if not args.yes:
+                if input(yellow(f"``workArea: {work_area}`` already exists. Continue? (y/n)")) != "y":
+                    exit()
     os.makedirs(work_area, exist_ok=True)
 
     with open(template_crab, "r") as template_file:
